@@ -1,4 +1,4 @@
-# # [Example: GradCAM heatmap overlay](@id example-gradCAM)
+# # [Example:GradCAM heatmap overlay](@id example-gradCAM)
 # Calculating the GradCAM of your input image results in an explanation with drastically lower dimensionality compared to your input image. 
 # We can visualize the Class-Activation-Mapping better by overlaying it over the input image. We can do so using 'heatmap_overlay' from 
 # [VisionHeatmaps.jl](https://julia-xai.github.io/XAIDocs/VisionHeatmaps/stable/).
@@ -22,9 +22,9 @@ url = HTTP.URI("https://raw.githubusercontent.com/Julia-XAI/ExplainableAI.jl/gh-
 img = load(url)
 
 # # Preprocessing using ImageNetDataset
-# In order to make the image compatible with Flux we need to change the input to have the WHCN format. 
-# For that we can use [ImageNetDataset.jl's](https://github.com/adrhill/ImageNetDataset.jl) `transform` 
-# function to receive the WHC representation which we then reshape to WHCN.
+# In order to make the image compatible with Flux we need to change the input format to WHCN. 
+# For that [ImageNetDataset.jl's](https://github.com/adrhill/ImageNetDataset.jl) `transform` 
+# function can be used to calculate the WHC representation which then can be reshaped to WHCN.
 using ImageNetDataset                       # reshape and display heatmap   
 
 temp_name = tempname() * ".jpg"             # ImageNetDataset.transform() requires a file path
