@@ -1,4 +1,4 @@
-# # [Example:GradCAM heatmap overlay](@id example-gradCAM)
+# # [Example: GradCAM heatmap overlay](@id example-gradCAM)
 # Calculating the GradCAM of your input image results in an explanation with drastically lower dimensionality compared to your input image. 
 # We can visualize the Class-Activation-Mapping better by overlaying it over the input image. We can do so using 'heatmap_overlay' from 
 # [VisionHeatmaps.jl](https://julia-xai.github.io/XAIDocs/VisionHeatmaps/stable/).
@@ -31,7 +31,7 @@ temp_name = tempname() * ".jpg"             # ImageNetDataset.transform() requir
 save(File(format"JPEG", temp_name), img)
 tsf = CenterCropNormalize(; output_size=(224, 224))
 input = transform(tsf, temp_name)           # transform image to WHC format
-input = reshape(input, 224, 224, 3, :)      # reshape to WHCN format to make it Flux compatible
+input = reshape(input, 224, 224, 3, :);     # reshape to WHCN format to make it Flux compatible
 
 #md # !!! note "Temporary Files"
 #md #
@@ -44,16 +44,20 @@ input = reshape(input, 224, 224, 3, :)      # reshape to WHCN format to make it 
 feature_layers = model.layers[1]
 adaption_layers = model.layers[2]
 analyzer = GradCAM(feature_layers, adaption_layers)
-expl = analyze(input,analyzer)
+expl = analyze(input,analyzer);
+
+# The resulting heatmap is of lower dimensionality compared to the input:
+heatmap(expl)
 
 # # Display heatmap overlay
 # We can now overlay the heatmap over the input image using `heatmap_overlay`.
 heatmap_overlay(expl, img; alpha = 0.6)
 
-# # Optional: Save heatmap overlay
+# # Save heatmap overlay
 # heatmap_overlays are regular Images.jl images, they can be saved to a file using `save`.
 overlay_img = heatmap_overlay(expl, img; alpha = 0.6)
 save("heatmap_overlay.png", overlay_img)
 
-# Close and delete temp file. This should be redundant, but it's good practice.
+# # Delete temp file. 
+# This should be redundant, but it's good practice.
 rm(temp_name)
