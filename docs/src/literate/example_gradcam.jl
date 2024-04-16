@@ -46,18 +46,18 @@ adaption_layers = model.layers[2]
 analyzer = GradCAM(feature_layers, adaption_layers)
 expl = analyze(input,analyzer);
 
-# The resulting heatmap is of lower dimensionality compared to the input:
+# The heatmap is calculated by GradCAM utilizing gradients of the output class in respect to the feature maps.
+# Due to the nature of CNNs the input image is convoluted and downsampled to extract features.
+# This results in the heatmap to have a lower dimensionality compared to the input image:
 heatmap(expl)
 
 # # Display heatmap overlay
 # We can now overlay the heatmap over the input image using `heatmap_overlay`.
-heatmap_overlay(expl, img; alpha = 0.6)
+heatmap_overlay(expl, img)
+# Furthermore it is possible to change the transparency of the overlay by adjusting the `alpha` parameter.
+heatmap_overlay(expl, img; alpha = 0.8)
 
 # # Save heatmap overlay
 # heatmap_overlays are regular Images.jl images, they can be saved to a file using `save`.
-overlay_img = heatmap_overlay(expl, img; alpha = 0.6)
+overlay_img = heatmap_overlay(expl, img)
 save("heatmap_overlay.png", overlay_img)
-
-# # Delete temp file. 
-# This should be redundant, but it's good practice.
-rm(temp_name)

@@ -37,7 +37,9 @@ makedocs(;
         "General usage" => Any[
             "Heatmapping"          => "generated/heatmapping.md",
             "Input augmentations"  => "generated/augmentations.md",
-            "Example GradCAM"      => "generated/example_gradcam.md",
+        ],
+        "Examples" => Any[
+            "GradCAM"      => "generated/example_gradcam.md",
         ],
         "API Reference" => "api.md",
     ],
@@ -51,4 +53,4 @@ makedocs(;
     checkdocs=:exports, # only check docstrings in API reference if they are exported
 )
 
-#deploydocs(; repo="github.com/Julia-XAI/ExplainableAI.jl")
+deploydocs(; repo="github.com/Julia-XAI/ExplainableAI.jl")
